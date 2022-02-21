@@ -12,11 +12,9 @@ logoutButton.addEventListener('click', () => {
 async function displayFamilies() {
     // fetch families from supabase
     const families = await getFamilies();
-    console.log(families);
     // clear out the familiesEl
     familiesEl.textContent = '';
     for (let family of families) {
-        console.log(family.name);
         // create three elements for each family, one for the whole family, one to hold the name, and one to hold the bunnies
         // your HTML Element should look like this:
         // <div class="family">
@@ -41,6 +39,10 @@ async function displayFamilies() {
             bun.classList.add('bunny');
             bun.textContent = bunny.name;
             //    add an event listener to the bunny el. On click, delete the bunny, then refetch and redisplay all families.
+            bun.addEventListener('click', async () => {
+                await deleteBunny(bunny.name);
+                displayFamilies();
+            });
             // append this bunnyEl to the bunniesEl
             bunDiv.append(bun);
         }
